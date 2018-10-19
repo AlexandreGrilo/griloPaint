@@ -1,8 +1,6 @@
 package org.academiadecodigo.bootcamp;
 
-import org.academiadecodigo.simplegraphics.graphics.Color;
-import org.academiadecodigo.simplegraphics.graphics.Rectangle;
-import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
+import java.io.IOException;
 
 /**
  * Created by codecadet on 18/10/2018.
@@ -16,9 +14,10 @@ public class Paint {
 
     }
 
-    public void start() {
+    public void start() throws IOException {
 
         this.grid = new Grid(20, 20);
+
     }
 
 

@@ -14,7 +14,7 @@ public class Cell {
     private int row;
 
 
-    public static final int CELLSIZE = 10;
+    public static final int CELLSIZE = 30;
 
     public Cell(int column, int row) {
 
@@ -24,10 +24,6 @@ public class Cell {
 
         cell = new Rectangle(column, row, CELLSIZE, CELLSIZE);
         cell.draw();
-    }
-
-    public Rectangle getCell() {
-        return cell;
     }
 
     public void paintCell() {
@@ -43,6 +39,12 @@ public class Cell {
         filled = true;
     }
 
+    public void clear() {
+        cell.setColor(Color.BLACK);
+        cell.draw();
+        filled = false;
+    }
+
     public void setColor(Color color) {
         cell.setColor(color);
     }
@@ -51,20 +53,16 @@ public class Cell {
         cell.draw();
     }
 
+    public boolean isFilled() {
+        return filled;
+    }
+
     public void fill() {
         cell.fill();
     }
 
-    public void translate(double column, double row) {
+    public void move(double column, double row) {
         cell.translate(column, row);
-    }
-
-    public int getColumn() {
-        return column;
-    }
-
-    public int getRow() {
-        return row;
     }
 
 }

@@ -1,6 +1,7 @@
 package org.academiadecodigo.bootcamp;
 
 import org.academiadecodigo.simplegraphics.graphics.Color;
+import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
@@ -19,6 +20,22 @@ public class Player implements KeyboardHandler {
 
 
     public Player(Grid gridPlayer) {
+
+        this.column = 10;
+        this.row = 10;
+        cellPlayer = new Cell(Grid.PADDING + (Cell.CELLSIZE * column), Grid.PADDING + (Cell.CELLSIZE * row));
+        cellPlayer.setColor(Color.ORANGE);
+        cellPlayer.fill();
+
+        this.gridPlayer = gridPlayer;
+
+    }
+
+
+
+    //KEYBOARD MANAGER
+
+    public void startKeyboard() {
 
         Keyboard keyboard = new Keyboard(this);
 
@@ -47,45 +64,58 @@ public class Player implements KeyboardHandler {
         space.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         keyboard.addEventListener(space);
 
+        KeyboardEvent load = new KeyboardEvent();
+        load.setKey(KeyboardEvent.KEY_L);
+        load.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(load);
 
-        this.column = 10;
-        this.row = 10;
-        cellPlayer = new Cell(Grid.PADDING + (Cell.CELLSIZE * column), Grid.PADDING + (Cell.CELLSIZE * row));
-        cellPlayer.setColor(Color.ORANGE);
-        cellPlayer.fill();
+        KeyboardEvent save = new KeyboardEvent();
+        save.setKey(KeyboardEvent.KEY_S);
+        save.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(save);
 
-        this.gridPlayer = gridPlayer;
+        KeyboardEvent clear = new KeyboardEvent();
+        clear.setKey(KeyboardEvent.KEY_C);
+        clear.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(clear);
+
     }
 
 
+
+    //MOVES
+
     public void moveUp() {
         if (getRow() > 0) {
-            cellPlayer.translate(0, -Cell.CELLSIZE);
+            cellPlayer.move(0, -Cell.CELLSIZE);
             row--;
         }
     }
 
     public void moveDown() {
         if (getRow() < gridPlayer.getHeight() - 1) {
-            cellPlayer.translate(0, Cell.CELLSIZE);
+            cellPlayer.move(0, Cell.CELLSIZE);
             row++;
         }
     }
 
     public void moveLeft() {
         if (getColl() > 0) {
-            cellPlayer.translate(-Cell.CELLSIZE, 0);
+            cellPlayer.move(-Cell.CELLSIZE, 0);
             column--;
         }
     }
 
     public void moveRight() {
         if (getColl() < gridPlayer.getWidth() - 1) {
-            cellPlayer.translate(Cell.CELLSIZE, 0);
+            cellPlayer.move(Cell.CELLSIZE, 0);
             column++;
         }
     }
 
+
+
+    //GETTERS
 
     public int getColl() {
         return column;
@@ -94,6 +124,8 @@ public class Player implements KeyboardHandler {
     public int getRow() {
         return row;
     }
+
+
 
 
     @Override
@@ -115,6 +147,15 @@ public class Player implements KeyboardHandler {
                 break;
             case KeyboardEvent.KEY_SPACE:
                 gridPlayer.getCell(this.column, this.row).paintCell();
+                break;
+            case KeyboardEvent.KEY_L:
+                gridPlayer.load();
+                break;
+            case KeyboardEvent.KEY_S:
+                gridPlayer.save();
+                break;
+            case KeyboardEvent.KEY_C:
+                gridPlayer.clear();
                 break;
             default:
                 System.out.println("Something has gone really bad...");
