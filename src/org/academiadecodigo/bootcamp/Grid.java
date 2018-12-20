@@ -67,6 +67,7 @@ public class Grid {
 
             BufferedWriter bWriter = new BufferedWriter(writer);
 
+
             System.out.println(toString());
             bWriter.write(toString());
 
@@ -76,6 +77,7 @@ public class Grid {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     public void load() {
@@ -90,11 +92,12 @@ public class Grid {
             String line;
             int row = 0;
 
+
             while ((line = bReader.readLine()) != null) {
 
                 for (int col = 0; col < line.length(); col++) {
                     if (line.charAt(col) == '1') {
-                        cells[col][row].setColor(Color.ORANGE);
+                        cells[col][row].setColor(Color.BLACK);
                         cells[col][row].fill();
                     }
                     if (line.charAt(col) == '0') {
@@ -104,6 +107,7 @@ public class Grid {
                 }
                 row++;
             }
+
 
             bReader.close();
 
@@ -127,11 +131,7 @@ public class Grid {
         String result = "";
         for (int row = 0; row < rows; row++) {
             for (int column = 0; column < columns; column++) {
-                if (cells[column][row].isFilled()) {
-                    result += "1";
-                } else {
-                    result += "0";
-                }
+                result += cells[column][row];
             }
             result += "\n";
         }

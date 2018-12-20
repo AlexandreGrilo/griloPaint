@@ -12,28 +12,79 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
  */
 public class Player implements KeyboardHandler {
 
-    private Cell cellPlayer;
+    private Rectangle cellPlayer;
     private Grid gridPlayer;
+    private CellColor brushColor;
 
     private int column;
     private int row;
+
 
 
     public Player(Grid gridPlayer) {
 
         this.column = 10;
         this.row = 10;
-        cellPlayer = new Cell(Grid.PADDING + (Cell.CELLSIZE * column), Grid.PADDING + (Cell.CELLSIZE * row));
-        cellPlayer.setColor(Color.ORANGE);
-        cellPlayer.fill();
+        brushColor = CellColor.BLACK;
 
+        cellPlayer = new Rectangle(Grid.PADDING + (Cell.CELLSIZE * column), Grid.PADDING + (Cell.CELLSIZE * row), Cell.CELLSIZE, Cell.CELLSIZE);
+        cellPlayer.setColor(Color.BLACK);
+        cellPlayer.fill();
         this.gridPlayer = gridPlayer;
 
     }
 
 
+    //POINTER MOVEMENTS
 
-    //KEYBOARD MANAGER
+    public void moveUp() {
+        if (getRow() > 0) {
+            cellPlayer.translate(0, -Cell.CELLSIZE);
+            row--;
+        }
+    }
+
+    public void moveDown() {
+        if (getRow() < gridPlayer.getHeight() - 1) {
+            cellPlayer.translate(0, Cell.CELLSIZE);
+            row++;
+        }
+    }
+
+    public void moveLeft() {
+        if (getColl() > 0) {
+            cellPlayer.translate(-Cell.CELLSIZE, 0);
+            column--;
+        }
+    }
+
+    public void moveRight() {
+        if (getColl() < gridPlayer.getWidth() - 1) {
+            cellPlayer.translate(Cell.CELLSIZE, 0);
+            column++;
+        }
+    }
+
+
+    //PAINT THE POINTER WITH THE CURRENT COLOR
+
+    public void paintMySelf() {
+        cellPlayer.setColor(brushColor.nextColor().getSimpleGfxColor());
+    }
+
+
+    //GETTERS COLUMN AND ROW
+
+    public int getColl() {
+        return column;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+
+    //KEYBOARD MANAGER - MOVEMENT (ARROWS), PAINT CELL (SPACE), NEXT COLOR (R), SAVE (S), CLEAR (C), LOAD (L)
 
     public void startKeyboard() {
 
@@ -59,10 +110,10 @@ public class Player implements KeyboardHandler {
         right.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         keyboard.addEventListener(right);
 
-        KeyboardEvent space = new KeyboardEvent();
-        space.setKey(KeyboardEvent.KEY_SPACE);
-        space.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-        keyboard.addEventListener(space);
+        KeyboardEvent paint = new KeyboardEvent();
+        paint.setKey(KeyboardEvent.KEY_SPACE);
+        paint.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(paint);
 
         KeyboardEvent load = new KeyboardEvent();
         load.setKey(KeyboardEvent.KEY_L);
@@ -79,54 +130,12 @@ public class Player implements KeyboardHandler {
         clear.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         keyboard.addEventListener(clear);
 
+        KeyboardEvent changeColor = new KeyboardEvent();
+        changeColor.setKey(KeyboardEvent.KEY_R);
+        changeColor.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(changeColor);
+
     }
-
-
-
-    //MOVES
-
-    public void moveUp() {
-        if (getRow() > 0) {
-            cellPlayer.move(0, -Cell.CELLSIZE);
-            row--;
-        }
-    }
-
-    public void moveDown() {
-        if (getRow() < gridPlayer.getHeight() - 1) {
-            cellPlayer.move(0, Cell.CELLSIZE);
-            row++;
-        }
-    }
-
-    public void moveLeft() {
-        if (getColl() > 0) {
-            cellPlayer.move(-Cell.CELLSIZE, 0);
-            column--;
-        }
-    }
-
-    public void moveRight() {
-        if (getColl() < gridPlayer.getWidth() - 1) {
-            cellPlayer.move(Cell.CELLSIZE, 0);
-            column++;
-        }
-    }
-
-
-
-    //GETTERS
-
-    public int getColl() {
-        return column;
-    }
-
-    public int getRow() {
-        return row;
-    }
-
-
-
 
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
@@ -146,7 +155,7 @@ public class Player implements KeyboardHandler {
                 moveDown();
                 break;
             case KeyboardEvent.KEY_SPACE:
-                gridPlayer.getCell(this.column, this.row).paintCell();
+                gridPlayer.getCell(this.column, this.row).paintCell(brushColor.getCurrentColor());
                 break;
             case KeyboardEvent.KEY_L:
                 gridPlayer.load();
@@ -157,6 +166,9 @@ public class Player implements KeyboardHandler {
             case KeyboardEvent.KEY_C:
                 gridPlayer.clear();
                 break;
+            case KeyboardEvent.KEY_R:
+                paintMySelf();
+                break;
             default:
                 System.out.println("Something has gone really bad...");
                 break;
@@ -164,7 +176,6 @@ public class Player implements KeyboardHandler {
     }
 
     @Override
-    public void keyReleased(KeyboardEvent keyboardEvent) {
+    public void keyReleased(KeyboardEvent keyboardEvent) {}
 
-    }
 }

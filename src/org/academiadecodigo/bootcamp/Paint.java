@@ -16,7 +16,7 @@ public class Paint {
 
     public void start() throws IOException {
 
-        this.grid = new Grid(20, 20);
+        this.grid = new Grid(21, 21);
 
     }
 
