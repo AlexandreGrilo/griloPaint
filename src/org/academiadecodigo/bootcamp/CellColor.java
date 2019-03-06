@@ -2,9 +2,6 @@ package org.academiadecodigo.bootcamp;
 
 import org.academiadecodigo.simplegraphics.graphics.Color;
 
-/**
- * Created by codecadet on 19/10/2018.
- */
 
 public enum CellColor {
 

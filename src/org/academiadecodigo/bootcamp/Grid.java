@@ -1,14 +1,11 @@
 package org.academiadecodigo.bootcamp;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 import java.io.*;
 
-/**
- * Created by codecadet on 18/10/2018.
- */
+
 public class Grid {
 
     Rectangle grid;

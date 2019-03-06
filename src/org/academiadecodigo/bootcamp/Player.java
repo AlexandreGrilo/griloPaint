@@ -7,9 +7,7 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 
-/**
- * Created by codecadet on 18/10/2018.
- */
+
 public class Player implements KeyboardHandler {
 
     private Rectangle cellPlayer;

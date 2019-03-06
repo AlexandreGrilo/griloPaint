@@ -3,9 +3,7 @@ package org.academiadecodigo.bootcamp;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
-/**
- * Created by codecadet on 18/10/2018.
- */
+
 public class Cell {
 
     private Rectangle cell;
